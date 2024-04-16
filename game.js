@@ -2,6 +2,15 @@ var userClickedPattern = [];
 var gamePattern = [];
 var buttonColours = ["red", "blue", "green", "yellow"];
 
+function animatePress(currentColor) {
+    var colorId = "#"+currentColor;
+    var buttonToAnimate = $(colorId);
+    buttonToAnimate.addClass("pressed");    
+    setTimeout(function(){
+        buttonToAnimate.removeClass("pressed");
+    }, 100);
+}
+
 function getAudioSource (color){
     switch (color) {
         case "red":
@@ -77,8 +86,9 @@ audioElement.play();
 $(".btn").click(function(e){
     var userChosenColour = e.target.id;
     playSound(userChosenColour);
+    animatePress(userChosenColour);
     userClickedPattern.push(userChosenColour);
-    console.log(userClickedPattern);
+    //console.log(userClickedPattern);
 });
 
 
