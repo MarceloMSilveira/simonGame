@@ -1,3 +1,5 @@
+var level =1;
+var gameBegin = true;
 var userClickedPattern = [];
 var gamePattern = [];
 var buttonColours = ["red", "blue", "green", "yellow"];
@@ -37,7 +39,10 @@ function playSound(colorName) {
 }
 
 function nextSequence (){
+    //seleciona nr aleatório entre 0 e 3
     var randomNumber = Math.floor(4*Math.random());
+    $("h1").text("Level "+level);
+    level++;
     return randomNumber;
 }
 
@@ -91,6 +96,25 @@ $(".btn").click(function(e){
     //console.log(userClickedPattern);
 });
 
+//start game when any key is pressed:
+$(document).keypress(function () {
+    if (gameBegin){
+        //identifica a cor aleatoriamente escolhida
+        //chama nextSequence que (muda o texto para identificar a fase)
+        var randomChosenColour = buttonColours[nextSequence()];
+        
+        //toca som do botão escolhido:
+        playSound(randomChosenColour);
+        //anima o botão escolhido:
+        animatePress(randomChosenColour);
+        //coloca a cor dentro do array de padrões 
+        //escolhidos pelo jogo
+        gamePattern.push(randomChosenColour);
+
+        //configura flag para executar somente na primeira vez
+        gameBegin=false;
+    }
+})
 
 /*
 $("#green").click(function(e){
